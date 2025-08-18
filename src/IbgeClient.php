@@ -17,7 +17,6 @@ class IbgeClient
     public function __construct(?HttpClientInterface $httpClient = null)
     {
         $httpClient = $httpClient ?? new CurlHttpClient();
-
         $this->estadosService = new EstadosService($httpClient);
         $this->municipiosService = new MunicipiosService($httpClient);
     }
