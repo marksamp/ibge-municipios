@@ -37,7 +37,6 @@ class MunicipiosService extends BaseService
     public function porId(int $id): Municipio
     {
         $data = $this->makeRequest("/localidades/municipios/{$id}");
-
         return Municipio::fromArray($data);
     }
 
@@ -110,9 +109,7 @@ class MunicipiosService extends BaseService
         $todos = $this->todos();
         $nome = strtolower($nome);
 
-        $municipios = array_filter($todos, fn($municipio) =>
-        str_contains(strtolower($municipio->nome), $nome)
-        );
+        $municipios = array_filter($todos, fn($municipio) => str_contains(strtolower($municipio->nome), $nome));
 
         // Converter para array indexado e manter ordem alfabética (já ordenado em todos())
         return array_values($municipios);
