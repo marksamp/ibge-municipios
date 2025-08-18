@@ -19,7 +19,12 @@ class MunicipiosService extends BaseService
     {
         $data = $this->makeRequest('/localidades/municipios');
 
-        return array_map(fn($item) => Municipio::fromArray($item), $data);
+        $municipios = array_map(fn($item) => Municipio::fromArray($item), $data);
+
+        // Ordenar por nome alfabeticamente
+        usort($municipios, fn($a, $b) => $a->nome <=> $b->nome);
+
+        return $municipios;
     }
 
     /**
@@ -47,7 +52,12 @@ class MunicipiosService extends BaseService
     {
         $data = $this->makeRequest("/localidades/estados/{$estado}/municipios");
 
-        return array_map(fn($item) => Municipio::fromArray($item), $data);
+        $municipios = array_map(fn($item) => Municipio::fromArray($item), $data);
+
+        // Ordenar por nome alfabeticamente
+        usort($municipios, fn($a, $b) => $a->nome <=> $b->nome);
+
+        return $municipios;
     }
 
     /**
@@ -61,7 +71,12 @@ class MunicipiosService extends BaseService
     {
         $data = $this->makeRequest("/localidades/microrregioes/{$microrregiaoId}/municipios");
 
-        return array_map(fn($item) => Municipio::fromArray($item), $data);
+        $municipios = array_map(fn($item) => Municipio::fromArray($item), $data);
+
+        // Ordenar por nome alfabeticamente
+        usort($municipios, fn($a, $b) => $a->nome <=> $b->nome);
+
+        return $municipios;
     }
 
     /**
@@ -75,7 +90,12 @@ class MunicipiosService extends BaseService
     {
         $data = $this->makeRequest("/localidades/mesorregioes/{$mesorregiaoId}/municipios");
 
-        return array_map(fn($item) => Municipio::fromArray($item), $data);
+        $municipios = array_map(fn($item) => Municipio::fromArray($item), $data);
+
+        // Ordenar por nome alfabeticamente
+        usort($municipios, fn($a, $b) => $a->nome <=> $b->nome);
+
+        return $municipios;
     }
 
     /**
@@ -90,8 +110,42 @@ class MunicipiosService extends BaseService
         $todos = $this->todos();
         $nome = strtolower($nome);
 
-        return array_filter($todos, fn($municipio) =>
+        $municipios = array_filter($todos, fn($municipio) =>
         str_contains(strtolower($municipio->nome), $nome)
         );
+
+        // Converter para array indexado e manter ordem alfabética (já ordenado em todos())
+        return array_values($municipios);
+    }
+
+    /**
+     * Retorna todos os municípios sem ordenação (ordem original da API)
+     *
+     * @return array<Municipio>
+     * @throws IbgeApiException
+     */
+    public function todosOrdemOriginal(): array
+    {
+        $data = $this->makeRequest('/localidades/municipios');
+
+        return array_map(fn($item) => Municipio::fromArray($item), $data);
+    }
+
+    /**
+     * Retorna todos os municípios ordenados por ID
+     *
+     * @return array<Municipio>
+     * @throws IbgeApiException
+     */
+    public function todosPorId(): array
+    {
+        $data = $this->makeRequest('/localidades/municipios');
+
+        $municipios = array_map(fn($item) => Municipio::fromArray($item), $data);
+
+        // Ordenar por ID
+        usort($municipios, fn($a, $b) => $a->id <=> $b->id);
+
+        return $municipios;
     }
 }

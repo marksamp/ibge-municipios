@@ -19,7 +19,12 @@ class EstadosService extends BaseService
     {
         $data = $this->makeRequest('/localidades/estados');
 
-        return array_map(fn($item) => Estado::fromArray($item), $data);
+        $estados = array_map(fn($item) => Estado::fromArray($item), $data);
+
+        // Ordenar por nome alfabeticamente
+        usort($estados, fn($a, $b) => $a->nome <=> $b->nome);
+
+        return $estados;
     }
 
     /**
@@ -47,7 +52,12 @@ class EstadosService extends BaseService
     {
         $data = $this->makeRequest("/localidades/regioes/{$regiaoId}/estados");
 
-        return array_map(fn($item) => Estado::fromArray($item), $data);
+        $estados = array_map(fn($item) => Estado::fromArray($item), $data);
+
+        // Ordenar por nome alfabeticamente
+        usort($estados, fn($a, $b) => $a->nome <=> $b->nome);
+
+        return $estados;
     }
 
     /**
@@ -69,5 +79,36 @@ class EstadosService extends BaseService
         }
 
         throw new IbgeApiException("Estado com sigla '{$sigla}' não encontrado");
+    }
+
+    /**
+     * Retorna todos os estados sem ordenação (ordem original da API)
+     *
+     * @return array<Estado>
+     * @throws IbgeApiException
+     */
+    public function todosOrdemOriginal(): array
+    {
+        $data = $this->makeRequest('/localidades/estados');
+
+        return array_map(fn($item) => Estado::fromArray($item), $data);
+    }
+
+    /**
+     * Retorna todos os estados ordenados por ID
+     *
+     * @return array<Estado>
+     * @throws IbgeApiException
+     */
+    public function todosPorId(): array
+    {
+        $data = $this->makeRequest('/localidades/estados');
+
+        $estados = array_map(fn($item) => Estado::fromArray($item), $data);
+
+        // Ordenar por ID
+        usort($estados, fn($a, $b) => $a->id <=> $b->id);
+
+        return $estados;
     }
 }

@@ -56,7 +56,7 @@ $municipiosSP = $ibge->municipios()->porEstado('SP');
 ### Métodos Disponíveis
 
 ```php
-// Buscar todos os estados
+// Buscar todos os estados (ordem alfabética por padrão)
 $estados = $ibge->estados()->todos();
 
 // Buscar estado por ID
@@ -65,8 +65,12 @@ $estado = $ibge->estados()->porId(35);
 // Buscar estado por sigla
 $estado = $ibge->estados()->porSigla('SP');
 
-// Buscar estados por região
+// Buscar estados por região (ordem alfabética)
 $estados = $ibge->estados()->porRegiao(3); // Sudeste
+
+// Ordenações alternativas
+$estados = $ibge->estados()->todosOrdemOriginal(); // Ordem da API
+$estados = $ibge->estados()->todosPorId();         // Por ID crescente
 ```
 
 ### Exemplo com Estados
@@ -89,24 +93,28 @@ $dados = $sp->toArray();
 ### Métodos Disponíveis
 
 ```php
-// Buscar todos os municípios (cuidado: são muitos!)
+// Buscar todos os municípios (ordem alfabética - cuidado: são muitos!)
 $municipios = $ibge->municipios()->todos();
 
 // Buscar município por ID
 $municipio = $ibge->municipios()->porId(3550308);
 
-// Buscar municípios por estado (ID ou sigla)
+// Buscar municípios por estado (ordem alfabética)
 $municipios = $ibge->municipios()->porEstado('SP');
 $municipios = $ibge->municipios()->porEstado(35);
 
-// Buscar municípios por microrregião
+// Buscar municípios por microrregião (ordem alfabética)
 $municipios = $ibge->municipios()->porMicrorregiao(11);
 
-// Buscar municípios por mesorregião
+// Buscar municípios por mesorregião (ordem alfabética)
 $municipios = $ibge->municipios()->porMesorregiao(15);
 
-// Buscar municípios por nome (busca parcial)
+// Buscar municípios por nome (ordem alfabética)
 $municipios = $ibge->municipios()->buscarPorNome('Santos');
+
+// Ordenações alternativas
+$municipios = $ibge->municipios()->todosOrdemOriginal(); // Ordem da API
+$municipios = $ibge->municipios()->todosPorId();         // Por ID crescente
 ```
 
 ### Exemplo com Municípios
@@ -208,6 +216,27 @@ class MeuHttpClient implements HttpClientInterface
 }
 
 $ibge = new IbgeClient(new MeuHttpClient());
+```
+
+## Ordenação dos Resultados
+
+Por padrão, todos os métodos que retornam arrays (lista de estados ou municípios) ordenam os resultados **alfabeticamente por nome**. Isso facilita a apresentação em interfaces de usuário.
+
+### Ordenação Padrão (Alfabética)
+```php
+$estados = $ibge->estados()->todos(); // A-Z por nome
+$municipios = $ibge->municipios()->porEstado('SP'); // A-Z por nome
+```
+
+### Ordenações Alternativas
+```php
+// Estados
+$estados = $ibge->estados()->todosOrdemOriginal(); // Ordem da API do IBGE
+$estados = $ibge->estados()->todosPorId();         // Por ID (1, 11, 12...)
+
+// Municípios  
+$municipios = $ibge->municipios()->todosOrdemOriginal(); // Ordem da API
+$municipios = $ibge->municipios()->todosPorId();         // Por ID crescente
 ```
 
 ## Extensibilidade
