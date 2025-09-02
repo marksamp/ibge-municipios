@@ -6,11 +6,16 @@ namespace Marksamp\IbgeLocalidades\Models;
 
 class Mesorregiao
 {
-    public function __construct(
-        public readonly int $id,
-        public readonly string $nome,
-        public readonly Estado $estado
-    ) {}
+    public int $id;
+    public string $nome;
+    public Estado $estado;
+
+    public function __construct(int $id, string $nome, Estado $estado)
+    {
+        $this->id = $id;
+        $this->nome = $nome;
+        $this->estado = $estado;
+    }
 
     /**
      * @param array<string, mixed> $data
@@ -18,9 +23,9 @@ class Mesorregiao
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) $data['id'],
-            nome: $data['nome'],
-            estado: Estado::fromArray($data['UF'])
+            (int) $data['id'],
+            $data['nome'],
+            Estado::fromArray($data['UF'])
         );
     }
 

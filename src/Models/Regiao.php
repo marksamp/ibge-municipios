@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Marksamp\IbgeLocalidades\Models;
 
-final class Regiao
+class Regiao
 {
-    public function __construct(
-        public readonly int $id,
-        public readonly string $sigla,
-        public readonly string $nome
-    ) {}
+    public int $id;
+    public string $sigla;
+    public string $nome;
+
+    public function __construct(int $id, string $sigla, string $nome)
+    {
+        $this->id = $id;
+        $this->sigla = $sigla;
+        $this->nome = $nome;
+    }
 
     /**
      * @param array<string, mixed> $data
@@ -18,9 +23,9 @@ final class Regiao
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) $data['id'],
-            sigla: (string) $data['sigla'],
-            nome: (string) $data['nome']
+            (int) $data['id'],
+            (string) $data['sigla'],
+            (string) $data['nome']
         );
     }
 

@@ -6,11 +6,16 @@ namespace Marksamp\IbgeLocalidades\Models;
 
 class Microrregiao
 {
-    public function __construct(
-        public readonly int $id,
-        public readonly string $nome,
-        public readonly ?Mesorregiao $mesorregiao = null
-    ) {}
+    public int $id;
+    public string $nome;
+    public ?Mesorregiao $mesorregiao;
+
+    public function __construct(int $id, string $nome, ?Mesorregiao $mesorregiao = null)
+    {
+        $this->id = $id;
+        $this->nome = $nome;
+        $this->mesorregiao = $mesorregiao;
+    }
 
     /**
      * @param array<string, mixed> $data
@@ -18,9 +23,9 @@ class Microrregiao
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) $data['id'],
-            nome: $data['nome'],
-            mesorregiao: isset($data['mesorregiao']) ? Mesorregiao::fromArray($data['mesorregiao']) : null
+            (int) $data['id'],
+            $data['nome'],
+            isset($data['mesorregiao']) ? Mesorregiao::fromArray($data['mesorregiao']) : null
         );
     }
 
@@ -32,7 +37,7 @@ class Microrregiao
         return [
             'id' => $this->id,
             'nome' => $this->nome,
-            'mesorregiao' => $this->mesorregiao?->toArray()
+            'mesorregiao' => $this->mesorregiao !== null ? $this->mesorregiao->toArray() : null
         ];
     }
 }

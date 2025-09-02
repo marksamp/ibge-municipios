@@ -7,7 +7,7 @@ Uma biblioteca PHP moderna e extensível para consumir as APIs do IBGE, com foco
 
 ## Características
 
-- ✅ **PHP 8+**: Utiliza recursos modernos do PHP como tipos de união, propriedades readonly e match expressions
+- ✅ **PHP 8.0.7+**: Compatível com versões estáveis do PHP 8
 - ✅ **PSR-4**: Autoloading compatível com padrões PSR
 - ✅ **Arquitetura extensível**: Facilmente extensível para outras APIs do IBGE
 - ✅ **Tratamento de erros**: Exceptions específicas para diferentes tipos de erro
@@ -25,7 +25,7 @@ composer require marksamp/ibge-localidades
 
 ### Requisitos
 
-- PHP 8.0 ou superior
+- PHP 8.0.7 ou superior
 - Extensão cURL
 - Extensão JSON
 

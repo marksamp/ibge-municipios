@@ -5,12 +5,12 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Marcio Sampaio",
-      "email": "marcio_ce@hotmail.com"
+      "name": "Seu Nome",
+      "email": "seu@email.com"
     }
   ],
   "require": {
-    "php": ">=8.0",
+    "php": ">=8.0.7",
     "ext-curl": "*",
     "ext-json": "*"
   },

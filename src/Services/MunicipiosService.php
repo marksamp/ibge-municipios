@@ -19,10 +19,14 @@ class MunicipiosService extends BaseService
     {
         $data = $this->makeRequest('/localidades/municipios');
 
-        $municipios = array_map(fn($item) => Municipio::fromArray($item), $data);
+        $municipios = array_map(function($item) {
+            return Municipio::fromArray($item);
+        }, $data);
 
         // Ordenar por nome alfabeticamente
-        usort($municipios, fn($a, $b) => $a->nome <=> $b->nome);
+        usort($municipios, function($a, $b) {
+            return $a->nome <=> $b->nome;
+        });
 
         return $municipios;
     }
@@ -37,6 +41,7 @@ class MunicipiosService extends BaseService
     public function porId(int $id): Municipio
     {
         $data = $this->makeRequest("/localidades/municipios/{$id}");
+
         return Municipio::fromArray($data);
     }
 
@@ -47,14 +52,18 @@ class MunicipiosService extends BaseService
      * @return array<Municipio>
      * @throws IbgeApiException
      */
-    public function porEstado(int|string $estado): array
+    public function porEstado($estado): array
     {
         $data = $this->makeRequest("/localidades/estados/{$estado}/municipios");
 
-        $municipios = array_map(fn($item) => Municipio::fromArray($item), $data);
+        $municipios = array_map(function($item) {
+            return Municipio::fromArray($item);
+        }, $data);
 
         // Ordenar por nome alfabeticamente
-        usort($municipios, fn($a, $b) => $a->nome <=> $b->nome);
+        usort($municipios, function($a, $b) {
+            return $a->nome <=> $b->nome;
+        });
 
         return $municipios;
     }
@@ -70,10 +79,14 @@ class MunicipiosService extends BaseService
     {
         $data = $this->makeRequest("/localidades/microrregioes/{$microrregiaoId}/municipios");
 
-        $municipios = array_map(fn($item) => Municipio::fromArray($item), $data);
+        $municipios = array_map(function($item) {
+            return Municipio::fromArray($item);
+        }, $data);
 
         // Ordenar por nome alfabeticamente
-        usort($municipios, fn($a, $b) => $a->nome <=> $b->nome);
+        usort($municipios, function($a, $b) {
+            return $a->nome <=> $b->nome;
+        });
 
         return $municipios;
     }
@@ -109,7 +122,9 @@ class MunicipiosService extends BaseService
         $todos = $this->todos();
         $nome = strtolower($nome);
 
-        $municipios = array_filter($todos, fn($municipio) => str_contains(strtolower($municipio->nome), $nome));
+        $municipios = array_filter($todos, function($municipio) use ($nome) {
+            return str_contains(strtolower($municipio->nome), $nome);
+        });
 
         // Converter para array indexado e manter ordem alfabética (já ordenado em todos())
         return array_values($municipios);
@@ -125,7 +140,11 @@ class MunicipiosService extends BaseService
     {
         $data = $this->makeRequest('/localidades/municipios');
 
-        return array_map(fn($item) => Municipio::fromArray($item), $data);
+        $municipios = array_map(function($item) {
+            return Municipio::fromArray($item);
+        }, $data);
+
+        return $municipios;
     }
 
     /**
@@ -138,10 +157,14 @@ class MunicipiosService extends BaseService
     {
         $data = $this->makeRequest('/localidades/municipios');
 
-        $municipios = array_map(fn($item) => Municipio::fromArray($item), $data);
+        $municipios = array_map(function($item) {
+            return Municipio::fromArray($item);
+        }, $data);
 
         // Ordenar por ID
-        usort($municipios, fn($a, $b) => $a->id <=> $b->id);
+        usort($municipios, function($a, $b) {
+            return $a->id <=> $b->id;
+        });
 
         return $municipios;
     }

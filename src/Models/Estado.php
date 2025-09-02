@@ -6,12 +6,18 @@ namespace Marksamp\IbgeLocalidades\Models;
 
 class Estado
 {
-    public function __construct(
-        public readonly int $id,
-        public readonly string $sigla,
-        public readonly string $nome,
-        public readonly Regiao $regiao
-    ) {}
+    public int $id;
+    public string $sigla;
+    public string $nome;
+    public Regiao $regiao;
+
+    public function __construct(int $id, string $sigla, string $nome, Regiao $regiao)
+    {
+        $this->id = $id;
+        $this->sigla = $sigla;
+        $this->nome = $nome;
+        $this->regiao = $regiao;
+    }
 
     /**
      * @param array<string, mixed> $data
@@ -19,10 +25,10 @@ class Estado
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int) $data['id'],
-            sigla: $data['sigla'],
-            nome: $data['nome'],
-            regiao: Regiao::fromArray($data['regiao'])
+            (int) $data['id'],
+            $data['sigla'],
+            $data['nome'],
+            Regiao::fromArray($data['regiao'])
         );
     }
 
