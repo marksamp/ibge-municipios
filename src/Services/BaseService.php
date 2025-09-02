@@ -10,10 +10,10 @@ use Marksamp\IbgeLocalidades\Exceptions\IbgeApiException;
 abstract class BaseService
 {
     protected const BASE_URL = 'https://servicodados.ibge.gov.br/api/v1';
-
-    public function __construct(
-        protected readonly HttpClientInterface $httpClient
-    ) {}
+    protected HttpClientInterface $httpClient;
+    public function __construct(HttpClientInterface $httpClient) {
+        $this->httpClient = $httpClient;
+    }
 
     /**
      * @param string $endpoint
