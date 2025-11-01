@@ -239,6 +239,110 @@ $municipios = $ibge->municipios()->todosOrdemOriginal(); // Ordem da API
 $municipios = $ibge->municipios()->todosPorId();         // Por ID crescente
 ```
 
+## Utilitários
+
+### Gerador de XML
+
+A biblioteca inclui um utilitário para gerar arquivos XML com estados e municípios brasileiros.
+
+#### Recursos do Gerador
+
+- ✅ XML com todos os estados e municípios
+- ✅ XML apenas com as capitais brasileiras
+- ✅ XML de um estado específico
+- ✅ Destaque automático para capitais
+- ✅ Formatação e identação
+- ✅ Metadados incluídos
+
+#### Uso Básico
+
+```php
+use Marksamp\IbgeLocalidades\Utils\XmlGenerator;
+
+$generator = new XmlGenerator();
+
+// Gerar XML com todas as capitais
+$xml = $generator->gerarXmlCapitais();
+$generator->salvarArquivo($xml, 'capitais.xml');
+
+// Gerar XML de um estado específico
+$xml = $generator->gerarXmlEstado('SP');
+$generator->salvarArquivo($xml, 'sao_paulo.xml');
+
+// Gerar XML completo (todos estados e municípios)
+$xml = $generator->gerarXmlCompleto();
+$generator->salvarArquivo($xml, 'brasil_completo.xml');
+```
+
+#### Scripts Prontos
+
+```bash
+# Modo interativo com menu de opções
+php gerar_xml.php
+
+# Modo automático (gera apenas capitais)
+php gerar_xml_automatico.php
+```
+
+#### Estrutura do XML Gerado
+
+**XML de Capitais:**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<capitais qtd="27">
+  <capital id="3550308" uf="SP">São Paulo</capital>
+  <capital id="3304557" uf="RJ">Rio de Janeiro</capital>
+  <capital id="2304400" uf="CE">Fortaleza</capital>
+  <!-- ... mais 24 capitais ... -->
+</capitais>
+```
+
+**XML de Estado Completo:**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<estado>
+  <id>35</id>
+  <sigla>SP</sigla>
+  <nome>São Paulo</nome>
+  <municipios qtd="645">
+    <municipio id="3500105">Adamantina</municipio>
+    <municipio id="3500204">Adolfo</municipio>
+    <!-- ... municípios em ordem alfabética ... -->
+    <municipio id="3550308" capital="1">São Paulo</municipio>
+    <!-- ... mais municípios ... -->
+  </municipios>
+</estado>
+```
+
+**XML Completo (Brasil):**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<brasil>
+  <estado>
+    <id>12</id>
+    <sigla>AC</sigla>
+    <nome>Acre</nome>
+    <municipios qtd="22">
+      <municipio id="1200013">Acrelândia</municipio>
+      <municipio id="1200054">Assis Brasil</municipio>
+      <!-- ... municípios em ordem alfabética ... -->
+      <municipio id="1200401" capital="1">Rio Branco</municipio>
+      <!-- ... mais municípios ... -->
+    </municipios>
+  </estado>
+  <!-- ... todos os 27 estados ... -->
+</brasil>
+```
+
+**Características do XML:**
+- ✅ Estrutura simplificada e limpa
+- ✅ Estado: apenas `id`, `sigla` e `nome` como tags
+- ✅ Atributo `qtd` na tag `municipios`
+- ✅ Municípios sem agrupamento de regiões
+- ✅ Municípios em ordem alfabética
+- ✅ Município: apenas `id` como atributo e nome como conteúdo
+- ✅ Capital identificada com `capital="1"` (não aparece se não for capital)
+
 ## Extensibilidade
 
 A biblioteca foi projetada para ser facilmente extensível. Para adicionar suporte a outras APIs do IBGE:
@@ -328,6 +432,26 @@ Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICEN
 - [Documentação oficial do IBGE](https://servicodados.ibge.gov.br/api/docs)
 
 ## Changelog
+
+### v1.2.0
+- ✅ **XML SIMPLIFICADO**: Estrutura otimizada e mais limpa
+- ✅ Estado: informações como tags (`<id>`, `<sigla>`, `<nome>`)
+- ✅ Atributo `qtd` em vez de `total` para quantidade
+- ✅ Capital: apenas `capital="1"` (não aparece em não-capitais)
+- ✅ Removido agrupamento de micro/mesorregião
+- ✅ Removidos metadados desnecessários
+- ✅ Tamanho dos arquivos XML reduzido em ~50%
+
+### v1.1.0
+- ✅ Adicionado utilitário gerador de XML
+- ✅ Suporte para gerar XML completo (estados + municípios)
+- ✅ Suporte para gerar XML apenas com capitais
+- ✅ Suporte para gerar XML de estado específico
+- ✅ Destaque automático para capitais no XML
+- ✅ Scripts prontos (interativo e automático)
+- ✅ Ordenação alfabética de resultados por padrão
+- ✅ Métodos alternativos de ordenação
+- ✅ Conversão completa para PHP 8.0.7
 
 ### v1.0.0
 - Implementação inicial

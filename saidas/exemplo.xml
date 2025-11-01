@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Exemplo SIMPLIFICADO de XML gerado pela biblioteca marksamp/ibge-localidades -->
+<!-- Este é um exemplo com apenas 2 estados para demonstração -->
+
+<brasil>
+    <!-- Estado 1: Ceará -->
+    <estado>
+        <id>23</id>
+        <sigla>CE</sigla>
+        <nome>Ceará</nome>
+        <municipios qtd="184">
+            <!-- Municípios em ordem alfabética -->
+            <municipio id="2300101">Abaiara</municipio>
+            <municipio id="2300150">Acarape</municipio>
+            <municipio id="2300200">Acaraú</municipio>
+            <!-- ... mais municípios ... -->
+            <municipio id="2304400" capital="1">Fortaleza</municipio>
+            <!-- ... mais municípios ... -->
+        </municipios>
+    </estado>
+
+    <!-- Estado 2: São Paulo -->
+    <estado>
+        <id>35</id>
+        <sigla>SP</sigla>
+        <nome>São Paulo</nome>
+        <municipios qtd="645">
+            <!-- Municípios em ordem alfabética -->
+            <municipio id="3500105">Adamantina</municipio>
+            <municipio id="3500204">Adolfo</municipio>
+            <municipio id="3500303">Aguaí</municipio>
+            <!-- ... mais municípios ... -->
+            <municipio id="3550308" capital="1">São Paulo</municipio>
+            <!-- ... mais municípios ... -->
+        </municipios>
+    </estado>
+
+    <!-- ... mais 25 estados ... -->
+</brasil>
